@@ -13,12 +13,15 @@ class ViewController: UIViewController {
 
     let eggTimes = ["Soft": 300, "Medium": 420, "Hard": 720]
     var timer: Timer?
+    var totalCount = 0
     var count = 0
     
     @IBOutlet weak var remainingTimeLabel: UILabel!
+    @IBOutlet weak var yorkProgressbar: UIProgressView!
     
     @IBAction func eggButtonClicked(_ sender: UIButton) {
         count = eggTimes[sender.currentTitle!]!
+        totalCount = count
         endTimer()
         startTimer()
     }
@@ -40,6 +43,8 @@ class ViewController: UIViewController {
     
     @objc func update() {
         if(count > 0) {
+            let progress = Float(totalCount - count) / Float(totalCount)
+            yorkProgressbar.setProgress(progress, animated: true)
             remainingTimeLabel.text = "\(count) seconds remains"
             count -= 1
         } else if (count == 0) {
