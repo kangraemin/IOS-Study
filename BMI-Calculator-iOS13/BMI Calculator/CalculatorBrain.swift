@@ -17,6 +17,16 @@ struct CalculatorBrain {
     }
     
     func getBMIValue() -> String {
-        return String(format: "%.1f", bmi)
+//        if bmi != nil {
+//            return String(format: "%.1f", bmi!)
+//        } else {
+//            return "0.0"
+//        }
+//        if let safeBMI = bmi {
+//            return String(format: "%.1f", safeBMI)
+//        } else {
+//            return "0.0"
+//        }
+        return String(format: "%.1f", bmi ?? 0.0)
     }
 }
