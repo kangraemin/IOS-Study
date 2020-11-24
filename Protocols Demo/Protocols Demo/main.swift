@@ -1,3 +1,6 @@
+protocol CanFly {
+    func fly() // Can't have implementation part
+}
 
 class Bird {
     
@@ -9,12 +12,16 @@ class Bird {
         }
     }
     
-    func fly() {
-        print("The bird flaps its wings and lifts off into the sky.")
-    }
+//    func fly() {
+//        print("The bird flaps its wings and lifts off into the sky.")
+//    }
 }
 
-class Eagle: Bird {
+class Eagle: Bird, CanFly {
+    
+    func fly() {
+        print("The eagle flaps its wings and lifts off into the sky.")
+    }
     
     func soar() {
         print("The eagle lides in the air using air currents.")
@@ -28,7 +35,7 @@ class Penguin: Bird {
 }
 
 class FlyingMusseum {
-    func flyingDemo(flyingObject: Bird) {
+    func flyingDemo(flyingObject: CanFly) {
         flyingObject.fly()
     }
 }
@@ -41,8 +48,8 @@ class FlyingMusseum {
 //
 //}
 
-class Airplane: Bird { // Very weird
-    override func fly() {
+struct Airplane: CanFly { // Very weird
+    func fly() {
         print("The airplane uses its engine to lift off into the air.")
     }
 }
@@ -55,13 +62,12 @@ myEagle.soar()
 let myPenguin = Penguin()
 myPenguin.swim()
 myPenguin.layEgg()
-myPenguin.fly() // Problem !! But penguin can't fly
+//myPenguin.fly() // Problem !! But penguin can't fly
 
 let musium = FlyingMusseum()
-musium.flyingDemo(flyingObject: myPenguin)
+//musium.flyingDemo(flyingObject: myPenguin)
 
 let myAirplain = Airplane()
-myAirplain.layEgg() // Veeeeerrrrrryy weird
+//myAirplain.layEgg() // Veeeeerrrrrryy weird
 musium.flyingDemo(flyingObject: myAirplain)
 // Remember inheritance is only can be done for class not struct
-
