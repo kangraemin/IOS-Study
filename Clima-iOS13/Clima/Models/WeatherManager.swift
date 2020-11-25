@@ -23,21 +23,48 @@ struct WeatherManager {
             // 2. Create URLSession
             let session = URLSession(configuration: .default)
             // 3. Give the session a task
-            let task = session.dataTask(with: url, completionHandler: handle(data: response: error: ))
+            let task = session.dataTask(with: url) { (data, response, error) in
+                if error != nil {
+                    print(error!)
+                    return
+                }
+                
+                if let safeData = data {
+//                    let dataString = String(data: safeData, encoding: .utf8)
+//                    print(dataString)
+                    // 원래는 closure 안에서는 self가 명확하지 않기 때문에 self. 붙여야 함
+                    // self.parseJSON(weatherData: safeData)
+                    parseJSON(weatherData: safeData)// self.parseJSON(weatherData: safeData)
+                }
+            }
             // 4. Start the task
             task.resume()
         }
     }
     
-    func handle(data: Data?, response: URLResponse?, error: Error?) {
-        if error != nil {
-            print(error!)
-            return
+    func parseJSON(weatherData: Data) {
+        let decoder = JSONDecoder()
+        do {
+            // decode가 에러를 throw 하는것을 아래에서 잡음
+            let decodedData = try decoder.decode(WeatherData.self, from: weatherData)
+            print(decodedData.name)
+            print(decodedData.main.temp)
+            print(decodedData.weather[0].description)
+        } catch {
+            print(error)
         }
-        
-        if let safeData = data {
-            let dataString = String(data: safeData, encoding: .utf8)
-            print(dataString)
-        }
+            
     }
+    
+    //    func handle(data: Data?, response: URLResponse?, error: Error?) {
+    //        if error != nil {
+    //            print(error!)
+    //            return
+    //        }
+    //
+    //        if let safeData = data {
+    //            let dataString = String(data: safeData, encoding: .utf8)
+    //            print(dataString)
+    //        }
+    //    }
 }
