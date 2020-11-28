@@ -10,6 +10,7 @@ import Foundation
 
 struct WeatherManager {
     let weatherURL = "https://api.openweathermap.org/data/2.5/weather?appid=d40b8dfc9355905ad25bc60eeb126b0c&units=metric"
+    var delegate: WeatherViewController?
     
     func fetchWeather(cityName: String) {
         let urlString = "\(weatherURL)&q=\(cityName)"
@@ -30,11 +31,18 @@ struct WeatherManager {
                 }
                 
                 if let safeData = data {
-                    //                    let dataString = String(data: safeData, encoding: .utf8)
-                    //                    print(dataString)
+                    // let dataString = String(data: safeData, encoding: .utf8)
+                    // print(dataString)
                     // 원래는 closure 안에서는 self가 명확하지 않기 때문에 self. 붙여야 함
                     // self.parseJSON(weatherData: safeData)
-                    parseJSON(weatherData: safeData)// self.parseJSON(weatherData: safeData)
+                    // self.parseJSON(weatherData: safeData)
+                    if let weather = parseJSON(weatherData: safeData) {
+//                        let weatherVC = WeatherViewController()
+//                        weatherVC.didUpdateWeather(weather: weather)
+                        self.delegate?.didUpdateWeather(weather: weather)
+                    } else {
+                        
+                    }
                 }
             }
             // 4. Start the task
@@ -42,7 +50,7 @@ struct WeatherManager {
         }
     }
     
-    func parseJSON(weatherData: Data) {
+    func parseJSON(weatherData: Data) -> WeatherModel? {
         let decoder = JSONDecoder()
         do {
             // decode가 에러를 throw 하는것을 아래에서 잡음
@@ -58,8 +66,10 @@ struct WeatherManager {
             let weather = WeatherModel(conditionId: id, cityName: name, temperature: temp)
             print(weather.conditionName)
             print(weather.temperatureString)
+            return weather
         } catch {
             print(error)
+            return nil
         }
     }
     
@@ -74,4 +84,8 @@ struct WeatherManager {
     //            print(dataString)
     //        }
     //    }
+}
+
+protocol weatherManagerDelegate {
+    func didUpdateWeather(weather: WeatherModel)
 }

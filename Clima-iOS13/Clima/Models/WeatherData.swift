@@ -10,17 +10,17 @@ import Foundation
 
 // Decodable -> the weather data turned into a type that can decode itself from an external representation namely the JSON representation
 // JSON Decode할때 필요한 protocol 
-struct WeatherData: Decodable {
+struct WeatherData: Codable {
     let name: String
     let main: Main
     let weather: [Weather]
 }
 
-struct Main: Decodable {
+struct Main: Codable {
     let temp: Double
 }
 
-struct Weather: Decodable {
+struct Weather: Codable {
     let description: String
     let id: Int
 }
