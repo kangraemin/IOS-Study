@@ -15,10 +15,10 @@ struct WeatherManager {
     func fetchWeather(cityName: String) {
         let urlString = "\(weatherURL)&q=\(cityName)"
         print(urlString)
-        performRequest(urlString: urlString)
+        performRequest(with: urlString)
     }
     
-    func performRequest(urlString: String) {
+    func performRequest(with urlString: String) {
         // 1. Create URL
         if let url = URL(string: urlString) {
             // 2. Create URLSession
@@ -27,6 +27,7 @@ struct WeatherManager {
             let task = session.dataTask(with: url) { (data, response, error) in
                 if error != nil {
                     print(error!)
+                    delegate?.didFailWithError(error: error!)
                     return
                 }
                 
@@ -36,10 +37,10 @@ struct WeatherManager {
                     // 원래는 closure 안에서는 self가 명확하지 않기 때문에 self. 붙여야 함
                     // self.parseJSON(weatherData: safeData)
                     // self.parseJSON(weatherData: safeData)
-                    if let weather = parseJSON(weatherData: safeData) {
+                    if let weather = parseJSON(safeData) {
 //                        let weatherVC = WeatherViewController()
 //                        weatherVC.didUpdateWeather(weather: weather)
-                        self.delegate?.didUpdateWeather(weather: weather)
+                        self.delegate?.didUpdateWeather(self, weather: weather)
                     } else {
                         
                     }
@@ -50,7 +51,7 @@ struct WeatherManager {
         }
     }
     
-    func parseJSON(weatherData: Data) -> WeatherModel? {
+    func parseJSON(_ weatherData: Data) -> WeatherModel? {
         let decoder = JSONDecoder()
         do {
             // decode가 에러를 throw 하는것을 아래에서 잡음
@@ -69,6 +70,7 @@ struct WeatherManager {
             return weather
         } catch {
             print(error)
+            delegate?.didFailWithError(error: error)
             return nil
         }
     }
@@ -87,5 +89,6 @@ struct WeatherManager {
 }
 
 protocol weatherManagerDelegate {
-    func didUpdateWeather(weather: WeatherModel)
+    func didUpdateWeather(_ weatherManager: WeatherManager, weather: WeatherModel)
+    func didFailWithError(error: Error)
 }
