@@ -30,8 +30,8 @@ struct WeatherManager {
                 }
                 
                 if let safeData = data {
-//                    let dataString = String(data: safeData, encoding: .utf8)
-//                    print(dataString)
+                    //                    let dataString = String(data: safeData, encoding: .utf8)
+                    //                    print(dataString)
                     // 원래는 closure 안에서는 self가 명확하지 않기 때문에 self. 붙여야 함
                     // self.parseJSON(weatherData: safeData)
                     parseJSON(weatherData: safeData)// self.parseJSON(weatherData: safeData)
@@ -50,10 +50,17 @@ struct WeatherManager {
             print(decodedData.name)
             print(decodedData.main.temp)
             print(decodedData.weather[0].description)
+            print(decodedData.weather[0].id)
+            let id = decodedData.weather[0].id
+            let temp = decodedData.main.temp
+            let name = decodedData.name
+            
+            let weather = WeatherModel(conditionId: id, cityName: name, temperature: temp)
+            print(weather.conditionName)
+            print(weather.temperatureString)
         } catch {
             print(error)
         }
-            
     }
     
     //    func handle(data: Data?, response: URLResponse?, error: Error?) {
