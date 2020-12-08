@@ -65,6 +65,11 @@ class WeatherViewController: UIViewController, UITextFieldDelegate, weatherManag
     
     func didUpdateWeather(_ weatherManager: WeatherManager, weather: WeatherModel) {
         print(weather.temperature)
+        // UI를 변경하는것은 메인 쓰레드에서만 가능하다.
+        DispatchQueue.main.async {
+            self.temperatureLabel.text = weather.temperatureString
+            self.conditionImageView.image = UIImage(systemName: weather.conditionName)
+        }
     }
 }
 
