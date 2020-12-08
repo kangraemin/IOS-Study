@@ -8,7 +8,7 @@
 
 import UIKit
 
-class WeatherViewController: UIViewController, UITextFieldDelegate, weatherManagerDelegate {
+class WeatherViewController: UIViewController {
 
     @IBOutlet weak var conditionImageView: UIImageView!
     @IBOutlet weak var temperatureLabel: UILabel!
@@ -23,7 +23,11 @@ class WeatherViewController: UIViewController, UITextFieldDelegate, weatherManag
         searchTextField.delegate = self
         weatherManager.delegate = self
     }
+}
 
+// MARK: - UITextFieldDelegate
+
+extension WeatherViewController: UITextFieldDelegate {
     @IBAction func searchPressed(_ sender: UIButton) {
         // it is different with placeholder
         searchTextField.endEditing(true)
@@ -58,7 +62,11 @@ class WeatherViewController: UIViewController, UITextFieldDelegate, weatherManag
             weatherManager.fetchWeather(cityName: city)
         }
     }
-    
+}
+
+// MARK: - WeatherManagerDelegate
+
+extension WeatherViewController: weatherManagerDelegate {
     func didFailWithError(error: Error) {
         print(error)
     }
@@ -72,4 +80,5 @@ class WeatherViewController: UIViewController, UITextFieldDelegate, weatherManag
         }
     }
 }
+
 
