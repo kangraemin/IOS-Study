@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import CoreLocation
 
 class WeatherViewController: UIViewController {
 
@@ -16,12 +17,43 @@ class WeatherViewController: UIViewController {
     @IBOutlet weak var searchTextField: UITextField!
     
     var weatherManager = WeatherManager()
+    let locationManager = CLLocationManager()
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        // Request location permission
+        locationManager.delegate = self
+        locationManager.requestWhenInUseAuthorization()
+        locationManager.requestLocation()
+        
         // Do any additional setup after loading the view.
         searchTextField.delegate = self
         weatherManager.delegate = self
+    }
+    
+    @IBAction func locationButtonClicked(_ sender: UIButton) {
+        locationManager.requestLocation()
+    }
+}
+
+// MARK: - CLLocationManagerDelegate
+
+extension WeatherViewController: CLLocationManagerDelegate {
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        print(locations)
+        if let location = locations.last {
+            locationManager.stopUpdatingLocation()
+            let lat = location.coordinate.latitude
+            let lng = location.coordinate.longitude
+            print(lat)
+            print(lng)
+            weatherManager.fetchWeather(lat: lat, lng: lng)
+        }
+    }
+    
+    func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
+        print(error)
     }
 }
 
@@ -75,6 +107,7 @@ extension WeatherViewController: weatherManagerDelegate {
         print(weather.temperature)
         // UI를 변경하는것은 메인 쓰레드에서만 가능하다.
         DispatchQueue.main.async {
+            self.cityLabel.text = weather.cityName
             self.temperatureLabel.text = weather.temperatureString
             self.conditionImageView.image = UIImage(systemName: weather.conditionName)
         }
