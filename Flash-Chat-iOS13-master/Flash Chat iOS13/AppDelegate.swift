@@ -8,6 +8,7 @@
 
 import UIKit
 import Firebase
+import IQKeyboardManagerSwift
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -19,6 +20,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         FirebaseApp.configure()
         let db = Firestore.firestore()
         print(db)
+        
+        // 활성화
+        IQKeyboardManager.shared.enable = true
+        // Toolbar 끔
+        IQKeyboardManager.shared.enableAutoToolbar = false
+        // 키보드 바깥 구역 선택 했을 때 키보드 내림 
+        IQKeyboardManager.shared.shouldResignOnTouchOutside = true
+        
         return true
     }
 
