@@ -13,6 +13,8 @@
 		2806961B2613704F00D712E2 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2806961A2613704F00D712E2 /* Assets.xcassets */; };
 		2806961E2613704F00D712E2 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2806961D2613704F00D712E2 /* Preview Assets.xcassets */; };
 		280696212613704F00D712E2 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2806961F2613704F00D712E2 /* LaunchScreen.storyboard */; };
+		2806962B26137D6200D712E2 /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2806962A26137D6200D712E2 /* NetworkManager.swift */; };
+		2806962F26137E7B00D712E2 /* PostData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2806962E26137E7B00D712E2 /* PostData.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -24,6 +26,8 @@
 		2806961D2613704F00D712E2 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		280696202613704F00D712E2 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		280696222613704F00D712E2 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		2806962A26137D6200D712E2 /* NetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
+		2806962E26137E7B00D712E2 /* PostData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostData.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -59,6 +63,7 @@
 				280696142613704D00D712E2 /* AppDelegate.swift */,
 				280696162613704D00D712E2 /* SceneDelegate.swift */,
 				280696182613704D00D712E2 /* ContentView.swift */,
+				2806962926137D5500D712E2 /* models */,
 				2806961A2613704F00D712E2 /* Assets.xcassets */,
 				2806961F2613704F00D712E2 /* LaunchScreen.storyboard */,
 				280696222613704F00D712E2 /* Info.plist */,
@@ -73,6 +78,15 @@
 				2806961D2613704F00D712E2 /* Preview Assets.xcassets */,
 			);
 			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		2806962926137D5500D712E2 /* models */ = {
+			isa = PBXGroup;
+			children = (
+				2806962A26137D6200D712E2 /* NetworkManager.swift */,
+				2806962E26137E7B00D712E2 /* PostData.swift */,
+			);
+			path = models;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -145,6 +159,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2806962F26137E7B00D712E2 /* PostData.swift in Sources */,
+				2806962B26137D6200D712E2 /* NetworkManager.swift in Sources */,
 				280696152613704D00D712E2 /* AppDelegate.swift in Sources */,
 				280696172613704D00D712E2 /* SceneDelegate.swift in Sources */,
 				280696192613704D00D712E2 /* ContentView.swift in Sources */,
